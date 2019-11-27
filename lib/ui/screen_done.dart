@@ -27,7 +27,14 @@ class DoneScreenState extends State<DoneScreen>
     return Scaffold(
       body: ListView(
         children: <Widget>[
-          getToolbar(context)
+          getToolbar(context),
+          /*Column(
+
+          ),*/
+/*          Padding(
+            padding: EdgeInsets.only(top: 175.0),
+            child: Container(),
+          )*/
         ],
       ),
     );
@@ -52,7 +59,7 @@ class DoneScreenState extends State<DoneScreen>
               width: 40.0,
               height: 40.0,
               fit: BoxFit.cover,
-              image: AssetImage('assets/list.png')
+              image: AssetImage('asset/images/list.png')
           )
         ],
       ),
