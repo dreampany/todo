@@ -172,21 +172,65 @@ class DoneScreenState extends State<DoneScreen>
     return List.generate(documents.length, (int index) {
       return GestureDetector(
         onTap: onTaskTapped,
-        child: getCard(index, colors),
+        child: getCard(documents, colors, index),
       );
     });
   }
 
   void onTaskTapped() {}
 
-  Card getCard(Task task, String color) {
+  Card getCard(
+      Map<String, List<Task>> documents, List<String> colors, int index) {
     return Card(
       shape: RoundedRectangleBorder(
-
-      ),
-      color: Color(int.parse(color)),
+          borderRadius: BorderRadius.all(Radius.circular(8.0))),
+      color: Color(int.parse(colors.elementAt(index))),
       child: Container(
         width: 220.0,
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(top: 20.0, bottom: 15.0),
+                child: Container(
+                  child: Text(
+                    documents.keys.elementAt(index),
+                    style: TextStyle(color: Colors.white, fontSize: 19.0),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 5.0),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                        flex: 2,
+                        child: Container(
+                          margin: EdgeInsets.only(left: 50.0),
+                          color: Colors.white,
+                          height: 1.5,
+                        ))
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 30.0, left: 15.0, right: 5.0),
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 220.0,
+                      child: ListView.builder(
+                          itemCount: documents.values.elementAt(index).length,
+                          itemBuilder: (BuildContext context, int ind) {
+
+                          }),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
