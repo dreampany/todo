@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:todo/misc/Constants.dart';
 import 'package:todo/ui/screen_done.dart';
 import 'dart:developer' as developer;
 
@@ -11,7 +12,9 @@ Future<Null> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   currentUser = await signInAnonymously();
   //developer.log('CurrentUser' + currentUser.email, name: 'main.dart');
-  runApp(App());
+  runApp(
+      App()
+  );
 }
 
 Future<FirebaseUser> signInAnonymously() async {
@@ -54,9 +57,9 @@ class HomePageState extends State<HomePage>
             fixedColor: Colors.deepPurple,
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                  title: Text(''), icon: Icon(FontAwesomeIcons.calendarCheck)),
+                  title: Text(''), icon: Icon(FontAwesomeIcons.home)),
               BottomNavigationBarItem(
-                  title: Text(''), icon: Icon(FontAwesomeIcons.calendar)),
+                  title: Text(''), icon: Icon(FontAwesomeIcons.calendarCheck)),
               BottomNavigationBarItem(
                   title: Text(''), icon: Icon(FontAwesomeIcons.slidersH))
             ]),
