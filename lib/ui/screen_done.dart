@@ -57,7 +57,7 @@ class DoneScreenState extends State<DoneScreen>
                           Text(
                             'Done',
                             style:
-                            TextStyle(fontSize: 28.0, color: Colors.grey),
+                                TextStyle(fontSize: 28.0, color: Colors.grey),
                           )
                         ],
                       ),
@@ -85,9 +85,8 @@ class DoneScreenState extends State<DoneScreen>
                 },
                 child: StreamBuilder<QuerySnapshot>(
                     stream: Constants.collectionOfFirestore(
-                        widget.user, Constants.DATE, true)
+                            widget.user, Constants.DATE, true)
                         .snapshots(),
-
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (!snapshot.hasData)
@@ -102,8 +101,7 @@ class DoneScreenState extends State<DoneScreen>
                         scrollDirection: Axis.horizontal,
                         children: getItems(snapshot),
                       );
-                    }
-                ),
+                    }),
               ),
             ),
           )
@@ -139,12 +137,13 @@ class DoneScreenState extends State<DoneScreen>
 
   List<Widget> getItems(AsyncSnapshot<QuerySnapshot> snapshot) {
     if (widget.user.uid.isEmpty) return null;
+
     List<Task> items = List(), temp;
     Map<String, List<Task>> documents = Map();
     List<String> colors = new List();
+
     snapshot.data.documents.map<List>((document) {
       document.data.forEach((key, value) {
-
         if (value.runtimeType == bool) {
           items.add(Task(key, value));
         } else if (value.runtimeType == String && key == Constants.COLOR) {
@@ -154,12 +153,41 @@ class DoneScreenState extends State<DoneScreen>
         temp = List<Task>.from(items);
         documents[document.documentID] = temp;
 
-        temp.forEach((task){
-            if (task.done == false) {
+        for (int index = 0; index < temp.length; index++) {
+          if (temp.elementAt(index).done == false) {
+            documents.remove(document.documentID);
+            if (colors.isNotEmpty) colors.removeLast();
+            break;
+          }
+        }
 
-            }
-        });
+        if (temp.isEmpty) {
+          documents.remove(document.documentID);
+          colors.removeLast();
+        }
+        items.clear();
       });
     });
+
+    return List.generate(documents.length, (int index) {
+      return GestureDetector(
+        onTap: onTaskTapped,
+        child: getCard(index, colors),
+      );
+    });
+  }
+
+  void onTaskTapped() {}
+
+  Card getCard(Task task, String color) {
+    return Card(
+      shape: RoundedRectangleBorder(
+
+      ),
+      color: Color(int.parse(color)),
+      child: Container(
+        width: 220.0,
+      ),
+    );
   }
 }
